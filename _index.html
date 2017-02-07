@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Try Redux</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.js"></script>
+	<script src="https://unpkg.com/react@15/dist/react.js"></script>
+	<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+
+</head>
+<body>
+	<div id="root"></div>
+
+	<script>
+		const counter = (state=0, action) => {
+			switch (action.type) {
+				case 'INCREMENT':
+					return state + 1;
+				case 'DECREMENT':
+					return state - 1;
+				default:
+					return state;
+			}
+		}
+
+		const { createStore } = Redux;
+		const store = createStore(counter);
+
+		// console.log(store.getState());
+		//
+		// store.dispatch({ type: 'INCREMENT' });
+		// console.log(store.getState());
+
+		var Counter = function Counter(_ref) {
+		  var value = _ref.value,
+		      onIncrement = _ref.onIncrement,
+		      onDecrement = _ref.onDecrement;
+		  return React.createElement(
+		    "div",
+		    null,
+		    React.createElement(
+		      "h1",
+		      null,
+		      value
+		    ),
+		    React.createElement(
+		      "button",
+		      { onClick: onIncrement },
+		      "+"
+		    ),
+		    React.createElement(
+		      "button",
+		      { onClick: onDecrement },
+		      "-"
+		    )
+		  );
+		};
+
+		const render = () => {
+		  // document.body.innerText = store.getState();
+			ReactDOM.render(React.createElement(Counter, {
+			  value: store.getState(),
+			  onIncrement: function onIncrement() {
+			    return store.dispatch({
+			      type: 'INCREMENT'
+			    });
+			  },
+			  onDecrement: function onDecrement() {
+			    return store.dispatch({
+			      type: 'DECREMENT'
+			    });
+			  }
+			}), document.getElementById('root'));
+		};
+
+		store.subscribe(render);
+		render();
+
+		document.addEventListener('click', () => {
+			store.dispatch({ type: 'INCREMENT' });
+		})
+	</script>
+</body>
+</html>
