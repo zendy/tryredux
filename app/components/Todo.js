@@ -1,21 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const Todo = ({ todos, toggleTodo }) => (
-  <ul>
-    {todos.map(todo =>
-      <li
-        key={todo.id}
-        onClick={() => {
-          toggleTodo(todo.id);
-        }}
-        style={todo.completed ? { textDecoration: 'line-through' } : {}}
-      >
-        {todo.text}
-      </li>
-    )}
-  </ul>
-);
+const Todo = ({ todos, visibilityFilter, toggleTodo }) => {
+  const visibleTodos = getVisibleTodos(todos, visibilityFilter);
+  return (
+    <ul>
+      {visibleTodos.map(todo =>
+        <li
+          key={todo.id}
+          onClick={() => {
+            toggleTodo(todo.id);
+          }}
+          style={todo.completed ? { textDecoration: 'line-through' } : {}}
+        >
+          {todo.text}
+        </li>
+      )}
+    </ul>
+  );
+};
 
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
@@ -34,20 +36,4 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-const mapStateToProps = (state) => ({
-  // todos: state.todos,
-  todos: getVisibleTodos(state.todos, state.visibilityFilter),
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleTodo: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id,
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);
+export default Todo;

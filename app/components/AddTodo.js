@@ -1,18 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-let id = 0;
-
-const AddTodo = ({ dispatch }) => (
+const AddTodo = ({addTodo}) => (
   <div>
     <input type="text" ref={(node) => { this.input = node; }} />
     <button
       onClick={() => {
-        dispatch({
-          type: 'ADD_TODO',
-          id: id++,
-          text: this.input.value,
-        });
+        addTodo(this.input.value);
         this.input.value = '';
       }}
     >
@@ -21,4 +14,4 @@ const AddTodo = ({ dispatch }) => (
   </div>
 );
 
-export default connect()(AddTodo);
+export default AddTodo;

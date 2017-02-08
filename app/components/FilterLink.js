@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const FilterLink = (props) => {
-  if (props.active) {
+const FilterLink = ({ filter, visibilityFilter, toggleVisibilityFilter, children}) => {
+  if (filter === visibilityFilter) {
     return (
-      <span>{props.children}</span>
+      <span>{children}</span>
     );
   }
 
@@ -12,10 +11,10 @@ const FilterLink = (props) => {
     <button
       onClick={
         () => {
-          props.toggleVisibilityFilter(props.filter);
-        }
-      }>
-      {props.children}
+          toggleVisibilityFilter(filter);
+        }}
+    >
+      {children}
     </button>
   );
 };
@@ -25,19 +24,4 @@ FilterLink.propTypes = {
   children: React.PropTypes.string,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    active: ownProps.filter === state.visibilityFilter,
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    toggleVisibilityFilter: () => dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: ownProps.filter,
-    }),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterLink);
+export default FilterLink;
