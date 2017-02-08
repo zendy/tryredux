@@ -5,6 +5,8 @@ import AddTodo from '../components/AddTodo';
 import Filter from '../components/Filter';
 import Todo from '../components/Todo';
 
+import * as ACTIONS from './TodoApp.actions';
+
 const TodoApp = ({ todos, visibilityFilter, toggleTodo, addTodo, toggleVisibilityFilter }) => (
   <div>
     <AddTodo
@@ -30,22 +32,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleTodo: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id,
-      });
+      dispatch(ACTIONS.toggleTodo(id));
     },
     addTodo: (text) => {
-      dispatch({
-        type: 'ADD_TODO',
-        id: 1,
-        text,
-      });
+      dispatch(ACTIONS.addTodo(text));
     },
-    toggleVisibilityFilter: (filter) => dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter,
-    }),
+    toggleVisibilityFilter: (filter) => {
+      dispatch(ACTIONS.toggleVisibilityFilter(filter));
+    },
   };
 };
 
