@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
@@ -6,7 +7,7 @@ import { Provider } from 'react-redux';
 import TodoApp from './containers/TodoApp';
 import TodoAppReducers from './containers/TodoApp.reducers';
 
-import { loadState, saveState } from './helpers/localStorage';
+// import { loadState, saveState } from './helpers/localStorage';
 
 
 const persistedState = {
