@@ -12,12 +12,19 @@ export const addTodo = (text) => ({
   text,
 });
 
+const requestTodos = () => ({
+  type: 'REQUEST_TODOS',
+});
+
 const receiveTodos = (todos) => ({
   type: 'RECEIVE_TODOS',
   todos,
 });
 
-export const fetchTodos = () => fetchData().then(todos => receiveTodos(todos));
+export const fetchTodos = () => (dispatch, getState) => {
+  dispatch(requestTodos());
+  return fetchData().then(todos => dispatch(receiveTodos(todos)));
+};
 
 export const toggleVisibilityFilter = (filter) => ({
   type: 'SET_VISIBILITY_FILTER',

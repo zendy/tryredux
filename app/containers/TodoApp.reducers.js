@@ -46,11 +46,30 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
 
 const todosByID = (state = [], action) => {
   switch (action.type) {
-    case 'RECEIVE_TODOS':
+    case 'RECEIVE_TODOS': {
       return [
         ...state,
         ...action.todos,
       ];
+    }
+    case 'ADD_TODO':
+      return [
+        ...state,
+        todo({}, action),
+      ];
+    case 'TOGGLE_TODO':
+      return state.map(t => todo(t, action));
+    default:
+      return state;
+  }
+};
+
+const isFetching = (state = false, action) => {
+  switch (action.type) {
+    case 'REQUEST_TODOS':
+      return true;
+    case 'RECEIVE_TODOS':
+      return false;
     default:
       return state;
   }
@@ -59,6 +78,7 @@ const todosByID = (state = [], action) => {
 const TodoAppReducers = combineReducers({
   todosByID,
   visibilityFilter,
+  isFetching,
 });
 
 export default TodoAppReducers;
