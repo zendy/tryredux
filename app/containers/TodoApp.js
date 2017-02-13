@@ -7,25 +7,36 @@ import Todo from '../components/Todo';
 
 import * as ACTIONS from './TodoApp.actions';
 
-const TodoApp = ({ todos, visibilityFilter, toggleTodo, addTodo, toggleVisibilityFilter }) => (
-  <div>
-    <AddTodo
-      addTodo={addTodo}
-    />
-    <Filter
-      visibilityFilter={visibilityFilter}
-      toggleVisibilityFilter={toggleVisibilityFilter}
-    />
-    <Todo
-      todos={todos}
-      toggleTodo={toggleTodo}
-      visibilityFilter={visibilityFilter}
-    />
-  </div>
-);
+class TodoApp extends React.Component {
+  componentDidMount() {
+    this.props.fetchTodos();
+  }
+
+  render() {
+    return (
+      <div>
+        <AddTodo
+          addTodo={this.props.addTodo}
+        />
+        <Filter
+          visibilityFilter={this.props.visibilityFilter}
+          toggleVisibilityFilter={this.props.toggleVisibilityFilter}
+        />
+        <Todo
+          todos={this.props.todos}
+          toggleTodo={this.props.toggleTodo}
+          visibilityFilter={this.props.visibilityFilter}
+        />
+      </div>
+    );
+  }
+}
+// const TodoApp = ({ todos, visibilityFilter, toggleTodo, addTodo, toggleVisibilityFilter }) => (
+//
+// );
 
 const mapStateToProps = (state) => ({
-  todos: state.todos,
+  todos: state.todosByID,
   visibilityFilter: state.visibilityFilter,
 });
 
@@ -39,6 +50,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     toggleVisibilityFilter: (filter) => {
       dispatch(ACTIONS.toggleVisibilityFilter(filter));
+    },
+    fetchTodos: () => {
+      dispatch(ACTIONS.fetchTodos());
     },
   };
 };

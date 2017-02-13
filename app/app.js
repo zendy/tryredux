@@ -1,7 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import promise from 'redux-promise';
+import createLogger from 'redux-logger';
 import { Provider } from 'react-redux';
 
 import TodoApp from './containers/TodoApp';
@@ -20,7 +22,9 @@ const persistedState = {
 };
 // const persistedState = loadState();
 
-const store = createStore(TodoAppReducers, persistedState);
+const middlewares = [promise, createLogger()];
+
+const store = createStore(TodoAppReducers, persistedState, applyMiddleware(...middlewares));
 // store.subscribe(() => (
 //   saveState({
 //     todos: store.getState().todos,

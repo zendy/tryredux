@@ -44,8 +44,20 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
   }
 };
 
+const todosByID = (state = [], action) => {
+  switch (action.type) {
+    case 'RECEIVE_TODOS':
+      return [
+        ...state,
+        ...action.todos,
+      ];
+    default:
+      return state;
+  }
+};
+
 const TodoAppReducers = combineReducers({
-  todos,
+  todosByID,
   visibilityFilter,
 });
 

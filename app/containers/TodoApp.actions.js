@@ -1,4 +1,5 @@
 import { v4 } from 'node-uuid';
+import fetchData from '../api/reddit';
 
 export const toggleTodo = (id) => ({
   type: 'TOGGLE_TODO',
@@ -10,6 +11,13 @@ export const addTodo = (text) => ({
   id: v4(),
   text,
 });
+
+const receiveTodos = (todos) => ({
+  type: 'RECEIVE_TODOS',
+  todos,
+});
+
+export const fetchTodos = () => fetchData().then(todos => receiveTodos(todos));
 
 export const toggleVisibilityFilter = (filter) => ({
   type: 'SET_VISIBILITY_FILTER',
