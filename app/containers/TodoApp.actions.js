@@ -22,6 +22,10 @@ const receiveTodos = (todos) => ({
 });
 
 export const fetchTodos = () => (dispatch, getState) => {
+  if (getState().isFetching) {
+    return Promise.resolve();
+  }
+
   dispatch(requestTodos());
   return fetchData().then(todos => dispatch(receiveTodos(todos)));
 };
